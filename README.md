@@ -25,7 +25,7 @@ PokerHandSorter (main)
 
 How to execute:
 
-1.	Visual Studio 2019  
+1.	Visual Studio 2019
     a.	Open PokerHandSorter.sln file from the main folder
     b.	Select the PokerHandSorter console application project
     c.	Right click on the project then select Debug Run
