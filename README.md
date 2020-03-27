@@ -25,11 +25,11 @@ PokerHandSorter (main)
 
 How to execute:
 
-1.	Visual Studio 2019
-a.	Open PokerHandSorter.sln file from the main folder
-b.	Select the PokerHandSorter console application project
-c.	Right click on the project then select Debug Run
+A.	Visual Studio 2019
+1. Open PokerHandSorter.sln file from the main folder
+2. Select the PokerHandSorter console application project
+3. Right click on the project then select Debug Run
 
-2.	Command Prompt
-a.	Go to PokerHandSorter subfolder from the main folder
-b.	Type dotnet run poker-hands.txt in the PokerHandSorter subfolder
+B.	Command Prompt
+1. Go to PokerHandSorter subfolder from the main folder
+2. Type dotnet run poker-hands.txt in the PokerHandSorter subfolder
