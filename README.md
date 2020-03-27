@@ -19,7 +19,7 @@ Folder Structure:
 -	Poker.Domain
 -	Poker.UnitTests
 -	Poker.Data
--	PokerHandSorter
+-	PokerHandSorter (Console Application)
 
 
 How to execute:
