@@ -21,6 +21,11 @@ namespace Poker.Application.Evaluator.Categorisers
                 .RegisterNext(new HighCardCategoriser(new HighCardRule()));
         }
 
+        /// <summary>
+        /// Evaluate a Hand and return the given Hand with a ranking
+        /// </summary>
+        /// <param name="hand"></param>
+        /// <returns></returns>
         public Hand Evaluate(Hand hand)
         {
             return Head.Categorise(hand);

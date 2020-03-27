@@ -5,7 +5,6 @@ using Poker.Data;
 using Poker.Domain;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PokerHandSorter
 {
@@ -14,7 +13,8 @@ namespace PokerHandSorter
         private static void Main(string[] args)
         {
             var serviceProvider = ResolveServiceProvider();
-            var evaluator = serviceProvider.GetService<IHandEvaluator>();
+            var handEvaluator = serviceProvider.GetService<IHandEvaluator>();
+            var winnerEvaluator = serviceProvider.GetService<IWinnerEvaluator>();
             var reader = serviceProvider.GetService<FileHandReader>();
 
             try
@@ -25,7 +25,7 @@ namespace PokerHandSorter
                 var sorter = reader.Load(args[0]).GetHandSet();
                 var players = new[] { new Player("1"), new Player("2") };
 
-                RunGame(players, sorter, evaluator);
+                RunGame(players, sorter, handEvaluator, winnerEvaluator);
 
                 ShowResult(players);
             }
@@ -35,24 +35,19 @@ namespace PokerHandSorter
             }
         }
 
-        private static void RunGame(IReadOnlyList<Player> players, IEnumerable<Hand[]> sorter, IHandEvaluator evaluator)
+        private static void RunGame(IReadOnlyList<Player> players, IEnumerable<Hand[]> sorter, IHandEvaluator handEvaluator, IWinnerEvaluator winnerEvaluator)
         {
             foreach (var hands in sorter)
             {
-                // distribute the hand to player
+                // distribute hand to player and evaluate the ranking
                 for (var i = 0; i < players.Count; i++)
                 {
-                    players[i].Hand = evaluator.Evaluate(hands[i]);
+                    players[i].Hand = handEvaluator.Evaluate(hands[i]);
                 }
 
-                // determine the winner by using the IComparable interface
-                // sort the player by their rank
-                var playerHandOrder = players.OrderByDescending(p => p.Hand).ToArray();
-                var winner = playerHandOrder.First();
+                var winner = winnerEvaluator.ShowWinner(players);
 
-                var isTie = playerHandOrder.Skip(1).Any(p => winner.Hand.CompareTo(p.Hand) == 0);
-
-                if (!isTie) winner.WinCount++;
+                if (winner != null) winner.WinCount++;
             }
         }
 
@@ -77,6 +72,7 @@ namespace PokerHandSorter
         {
             services
                 .AddSingleton<IHandEvaluator, HandCategoriserChain>()
+                .AddSingleton<IWinnerEvaluator, WinnerEvaluator>()
                 .AddTransient<FileHandReader>()
                 ;
         }

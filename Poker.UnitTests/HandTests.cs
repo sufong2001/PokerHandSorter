@@ -4,7 +4,6 @@ using Poker.Application.Evaluator.Categorisers;
 using Poker.Domain;
 using Poker.UnitTests.TestData;
 using System;
-using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -14,11 +13,13 @@ namespace Poker.UnitTests
     {
         private readonly ITestOutputHelper _testOutputHelper;
         private readonly IHandEvaluator _handEvaluator;
+        private readonly IWinnerEvaluator _winnerEvaluator;
 
         public HandTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
             _handEvaluator = new HandCategoriserChain();
+            _winnerEvaluator = new WinnerEvaluator();
         }
 
         [Theory]
@@ -61,13 +62,9 @@ namespace Poker.UnitTests
 
             var players = new[] { player1, player2 };
 
-            // sort the player by their rank
-            var playerHandOrder = players.OrderByDescending(p => p.Hand).ToArray();
-            var topPlayer = playerHandOrder.First();
+            var winnerPlayer = _winnerEvaluator.ShowWinner(players);
 
-            var hasTie = playerHandOrder.Skip(1).Any(p => topPlayer.Hand.CompareTo(p.Hand) == 0);
-
-            var winner = hasTie ? "0" : topPlayer.Name;
+            var winner = winnerPlayer?.Name ?? "0";
 
             Assert.Equal($"{expectedWinner}", winner);
         }
@@ -81,13 +78,9 @@ namespace Poker.UnitTests
 
             var players = new[] { player1, player2 };
 
-            // sort the player by their rank
-            var playerHandOrder = players.OrderByDescending(p => p.Hand).ToArray();
-            var topPlayer = playerHandOrder.First();
+            var winnerPlayer = _winnerEvaluator.ShowWinner(players);
 
-            var hasTie = playerHandOrder.Skip(1).Any(p => topPlayer.Hand.CompareTo(p.Hand) == 0);
-
-            var winner = hasTie ? "0" : topPlayer.Name;
+            var winner = winnerPlayer?.Name ?? "0";
 
             Assert.Equal($"{expectedWinner}", winner);
         }
