@@ -33,5 +33,3 @@ How to execute:
 2.	Command Prompt
     a.	Go to PokerHandSorter subfolder from the main folder
     b.	Type dotnet run poker-hands.txt in the PokerHandSorter subfolder
-
- 
