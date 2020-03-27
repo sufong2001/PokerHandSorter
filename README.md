@@ -15,7 +15,6 @@ Assumption:
 
 Folder Structure:
 
-PokerHandSorter (main)
 -	Poker.Application
 -	Poker.Domain
 -	Poker.UnitTests
