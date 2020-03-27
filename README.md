@@ -31,4 +31,4 @@ A.	Visual Studio 2019
 
 B.	Command Prompt
 1. Go to PokerHandSorter subfolder from the main folder
-2. Type dotnet run poker-hands.txt in the PokerHandSorter subfolder
+2. Type "dotnet run poker-hands.txt" in the PokerHandSorter subfolder
