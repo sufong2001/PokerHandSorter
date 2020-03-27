@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Poker.Domain;
 using System.Linq;
-using System.Text;
-using Poker.Domain;
 
 namespace Poker.Application.Converters
 {
@@ -23,8 +20,7 @@ namespace Poker.Application.Converters
                 return new Card(v, s);
             }).ToArray();
 
-
             return new Hand(cards);
         }
-}
+    }
 }
