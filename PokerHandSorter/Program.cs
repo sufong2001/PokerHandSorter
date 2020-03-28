@@ -5,6 +5,7 @@ using Poker.Data;
 using Poker.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PokerHandSorter
 {
@@ -22,11 +23,14 @@ namespace PokerHandSorter
                 if (args.Length == 0)
                     throw new ArgumentNullException($"Data file name is required.");
 
+                // game preparation
                 var sorter = reader.Load(args[0]).GetHandSet();
                 var players = new[] { new Player("1"), new Player("2") };
 
+                // start simulation
                 RunGame(players, sorter, handEvaluator, winnerEvaluator);
 
+                // result
                 ShowResult(players);
             }
             catch (Exception e)
@@ -37,18 +41,32 @@ namespace PokerHandSorter
 
         private static void RunGame(IReadOnlyList<Player> players, IEnumerable<Hand[]> sorter, IHandEvaluator handEvaluator, IWinnerEvaluator winnerEvaluator)
         {
-            foreach (var hands in sorter)
+            // sorter gives hands to each game which will return a winner or null when it is tie.
+            var winners = sorter.Select(EachGameWinner)
+                .Where(w => w != null);
+
+            // here is what happen in each game
+            Player EachGameWinner(Hand[] hands)
             {
-                // distribute hand to player and evaluate the ranking
-                for (var i = 0; i < players.Count; i++)
-                {
-                    players[i].Hand = handEvaluator.Evaluate(hands[i]);
-                }
+                // each player receive a hand
+                var game = players.Select((p, i) => { p.Hand = hands[i]; return p; });
 
-                var winner = winnerEvaluator.ShowWinner(players);
+                // evaluate hand ranking on individual player
+                game = game.Select(p => { p.Hand = handEvaluator.Evaluate(p.Hand); return p; });
 
-                if (winner != null) winner.WinCount++;
+                // evaluate the winner
+                return winnerEvaluator.ShowWinner(game);
             }
+
+            // winning count on total and individual player
+            var totalGameHasWinner = winners.Sum(w =>
+            {
+                w.WinCount++;
+                return 1;
+            });
+
+            // total number of tie if it is required
+            var tie = sorter.Count() - totalGameHasWinner;
         }
 
         private static void ShowResult(Player[] players)
