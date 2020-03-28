@@ -51,7 +51,7 @@ namespace PokerHandSorter
                 // each player receive a hand
                 var game = players.Select((p, i) => { p.Hand = hands[i]; return p; });
 
-                // evaluate hand ranking on individual player
+                // evaluate hand ranking on individual player by using HandCategoriserChain with Chain of Responsibility Pattern  
                 game = game.Select(p => { p.Hand = handEvaluator.Evaluate(p.Hand); return p; });
 
                 // evaluate the winner

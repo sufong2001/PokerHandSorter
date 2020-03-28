@@ -8,7 +8,7 @@ namespace Poker.Application.Evaluator
     {
         public Player ShowWinner(IEnumerable<Player> players)
         {
-            // sort the player by their rank by using the IComparable interface
+            // sort the player by their hand which is using Hand.CompareTo function
             var playerHandOrder = players.OrderByDescending(p => p.Hand).ToArray();
             
             // found the possible winner
