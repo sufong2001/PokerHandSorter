@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace Poker.Application.Converters
 {
+    /// <summary>
+    /// Extensions helper class for converting hand text to hand object
+    /// </summary>
     public static class HandTextConverter
     {
         /// <summary>

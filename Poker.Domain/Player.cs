@@ -1,5 +1,8 @@
 ﻿namespace Poker.Domain
 {
+    /// <summary>
+    /// Represent a player in a poker game
+    /// </summary>
     public class Player
     {
         public Player(string name)

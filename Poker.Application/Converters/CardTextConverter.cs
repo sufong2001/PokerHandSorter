@@ -3,6 +3,9 @@ using System;
 
 namespace Poker.Application.Converters
 {
+    /// <summary>
+    /// Extensions helper class for converting char and enum value
+    /// </summary>
     public static class CardTextConverter
     {
         public static Value CharToValue(this char value) =>

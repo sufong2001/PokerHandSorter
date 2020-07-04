@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace Poker.Data
 {
+    /// <summary>
+    /// The implementation of a hand reader which allows to read hand data from a specified file format.
+    /// </summary>
     public class FileHandReader : IHandReader
     {
         protected string[] HandList { get; private set; } = new string[0];
