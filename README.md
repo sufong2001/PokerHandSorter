@@ -1,10 +1,12 @@
-This application exercise is not just about the algorithm implementation of the poker hand sorter. It has also demonstrated how a clean architecture can be applied to the application as a sample.
-The Domain-Driven Design, Test-Driven Design and SOLID Principles had been used as guideline during the application engineering process. The Chain of Responsibility Design Pattern is selected for the Poker Hand Ranking Evaluator and Rule classes to dedicate the separation of concerns. 
+This application exercise does not only involve the algorithm implementation of the poker hand sorter.
+It also demonstrates how to apply clean architecture as an example to an application.
+In the application engineering process, domain-driven design, test-driven design and SOLID principles have been used as guidelines.
+The Chain of Responsibility Design Pattern is dedicated to archive the separation of concern principle for the rank comparison implementation. 
 
 Assumptions:
-1.	A card value must be represented in one of the following character for test. 
+1.	A card value must be represented in one of the following characters for test. 
     '2','3','4','5','6','7','8','9','T','J','K','Q','A'
-2.	A card suit must be represented in one of the following character for test.
+2.	A card suit must be represented in one of the following characters for test.
     'D','H','S','C' 
 3.	Any exception will terminate the program without further execution.
 4.	The application only accepts the input from a text file as poker-hands.txt format that has been provided. 
