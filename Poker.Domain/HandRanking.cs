@@ -3,7 +3,7 @@
     /// <summary>
     /// The rank of the hand
     /// </summary>
-    public enum HandRanking
+    public enum Rank
     {
         Unknown      ,
         HighCard     ,

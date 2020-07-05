@@ -22,9 +22,15 @@ namespace Poker.UnitTests
             _winnerEvaluator = new WinnerEvaluator();
         }
 
+        /// <summary>
+        /// Hand evaluator test for testing the evaluation logic
+        /// </summary>
+        /// <param name="cards"></param>
+        /// <param name="expectedRank"></param>
+        /// <param name="expectedValue"></param>
         [Theory]
-        [ClassData(typeof(HandRankingDataSet))]
-        public void Should_GetCorrectRankAndHighCard_With_TestHandRankingData(string cards, HandRanking expectedRank, Value expectedValue)
+        [ClassData(typeof(HandRankDataSet))]
+        public void Should_GetCorrectRankAndHighCard_With_TestHandRankData(string cards, Rank expectedRank, Value expectedValue)
         {
             var hand = cards.Split(" ").StringToHand();
 
@@ -34,6 +40,12 @@ namespace Poker.UnitTests
             Assert.Equal(expectedValue, hand.HighCard?.Value ?? Value.None);
         }
 
+        /// <summary>
+        /// Poker rule test for testing hand comparing logic
+        /// </summary>
+        /// <param name="player1"></param>
+        /// <param name="player2"></param>
+        /// <param name="expectedWinner"></param>
         [Theory]
         [ClassData(typeof(WinnerSampleDataSet))]
         public void Should_GetCorrectWinner_With_TestWinnerData(string player1, string player2, int expectedWinner)
@@ -53,6 +65,12 @@ namespace Poker.UnitTests
             Assert.Equal(expectedWinner, winner);
         }
 
+        /// <summary>
+        /// Winner evaluator test for testing multi players comparison which can be advance to more then two players.
+        /// </summary>
+        /// <param name="hand1"></param>
+        /// <param name="hand2"></param>
+        /// <param name="expectedWinner"></param>
         [Theory]
         [ClassData(typeof(WinnerSampleDataSet))]
         public void Should_GetCorrectWinnerBySorting_With_TestWinnerData(string hand1, string hand2, int expectedWinner)
@@ -69,6 +87,12 @@ namespace Poker.UnitTests
             Assert.Equal($"{expectedWinner}", winner);
         }
 
+        /// <summary>
+        /// Implemetation test by comparing third party result.
+        /// </summary>
+        /// <param name="hand1"></param>
+        /// <param name="hand2"></param>
+        /// <param name="expectedWinner"></param>
         [Theory]
         [ClassData(typeof(ThirdPartyResultDataSet))]
         public void Should_MatchResult_With_TestThirdPartyResultData(string hand1, string hand2, int expectedWinner)
@@ -85,6 +109,10 @@ namespace Poker.UnitTests
             Assert.Equal($"{expectedWinner}", winner);
         }
 
+        /// <summary>
+        /// Exception test
+        /// </summary>
+        /// <param name="cards"></param>
         [Theory]
         [InlineData("2C 3C 4C 5C 6C 7C")]
         [InlineData("2C 3C 4C 5C")]

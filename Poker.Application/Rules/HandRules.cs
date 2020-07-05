@@ -1,13 +1,19 @@
-﻿using System.Linq;
-using Poker.Domain;
+﻿using Poker.Domain;
+using System.Linq;
 
 namespace Poker.Application.Rules
 {
+    /// <summary>
+    /// High Card which applies the base rule.
+    /// </summary>
     public class HighCardRule : RuleBase
     {
         // reuse base rule to evaluate single cards
     }
 
+    /// <summary>
+    /// Pair which applies the highest pair value.
+    /// </summary>
     public class PairRule : RuleBase
     {
         public override int EvaluateNonSingle(Hand x, Hand y)
@@ -19,6 +25,9 @@ namespace Poker.Application.Rules
         }
     }
 
+    /// <summary>
+    /// Two Pairs which applies the highest pair value.
+    /// </summary>
     public class TwoPairsRule : RuleBase
     {
         public override int EvaluateNonSingle(Hand x, Hand y)
@@ -30,6 +39,9 @@ namespace Poker.Application.Rules
         }
     }
 
+    /// <summary>
+    /// Three of a Kind which applies the highest value.
+    /// </summary>
     public class ThreeOfAKindRule : RuleBase
     {
         public override int EvaluateNonSingle(Hand x, Hand y)
@@ -41,16 +53,25 @@ namespace Poker.Application.Rules
         }
     }
 
+    /// <summary>
+    /// Straight which applies the base rule.
+    /// </summary>
     public class StraightRule : RuleBase
     {
         // reuse base rule to evaluate single cards
     }
 
+    /// <summary>
+    /// Flush which applies the base rule.
+    /// </summary>
     public class FlushRule : RuleBase
     {
         // reuse base rule to evaluate single cards
     }
 
+    /// <summary>
+    /// Full house which applies the highest value.
+    /// </summary>
     public class FullHouseRule : RuleBase
     {
         public override int EvaluateNonSingle(Hand x, Hand y)
@@ -62,6 +83,9 @@ namespace Poker.Application.Rules
         }
     }
 
+    /// <summary>
+    /// Four of a Kind which applies the highest value.
+    /// </summary>
     public class FourOfAKindRule : RuleBase
     {
         public override int EvaluateNonSingle(Hand x, Hand y)
@@ -73,11 +97,17 @@ namespace Poker.Application.Rules
         }
     }
 
+    /// <summary>
+    /// Straight Flush which applies the base rule.
+    /// </summary>
     public class StraightFlushRule : RuleBase
     {
         // reuse base rule to evaluate single cards
     }
 
+    /// <summary>
+    /// Royal Flush which applies the base rule.
+    /// </summary>
     public class RoyalFlushRule : RuleBase
     {
         // reuse base rule to evaluate single cards

@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace Poker.Application.Rules
 {
+    /// <summary>
+    /// The implmetation of the base rule of poker game
+    /// </summary>
     public class RuleBase : IRule
     {
         /// <summary>

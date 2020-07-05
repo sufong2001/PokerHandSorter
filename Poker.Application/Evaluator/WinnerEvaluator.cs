@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace Poker.Application.Evaluator
 {
+    /// <summary>
+    /// Implementation of a winner evaluator by utilising the IComparable<T> nature.
+    /// </summary>
     public class WinnerEvaluator : IWinnerEvaluator
     {
         public Player ShowWinner(IEnumerable<Player> players)

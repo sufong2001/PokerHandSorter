@@ -24,7 +24,7 @@ namespace Poker.Domain
         /// <summary>
         /// The rank of the hand according.
         /// </summary>
-        public HandRanking Rank { get; private set; }
+        public Rank Rank { get; private set; }
 
         /// <summary>
         /// A rule to be used for evaluating with another hand during comparison.
@@ -36,7 +36,7 @@ namespace Poker.Domain
         /// </summary>
         /// <param name="rank"></param>
         /// <param name="rule"></param>
-        public void SetRankAndRule(HandRanking rank, IRule rule)
+        public void SetRankAndRule(Rank rank, IRule rule)
         {
             Rank = rank;
             Rule = rule;

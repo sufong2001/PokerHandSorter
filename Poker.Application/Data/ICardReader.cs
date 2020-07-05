@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Poker.Domain;
 using System.Collections.Generic;
-using System.Text;
-using Poker.Domain;
 
 namespace Poker.Application.Data
 {
+    /// <summary>
+    /// The definition of Hand Reader common interface
+    /// </summary>
     public interface IHandReader
     {
         IEnumerable<Hand[]> GetHandSet();

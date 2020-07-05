@@ -3,12 +3,16 @@ using Poker.Domain;
 
 namespace Poker.Application.Evaluator.Categorisers
 {
+    /// <summary>
+    /// HandCategoriserChain is a hand evaluator which evaluates a hand and set the rank and rule for the hand.
+    /// </summary>
     public class HandCategoriserChain : IHandEvaluator
     {
         private HandCategoriser Head { get; }
 
         public HandCategoriserChain()
         {
+            // configurate categorisers in a chain responsibility
             Head = new RoyalFlushCategoriser(new RoyalFlushRule());
             Head.RegisterNext(new StraightFlushCategoriser(new StraightFlushRule()))
                 .RegisterNext(new FourOfAKindCategoriser(new FourOfAKindRule()))
@@ -22,7 +26,7 @@ namespace Poker.Application.Evaluator.Categorisers
         }
 
         /// <summary>
-        /// Evaluate a Hand and return the given Hand with a ranking
+        /// Evaluate a Hand and return the given Hand with a rank
         /// </summary>
         /// <param name="hand"></param>
         /// <returns></returns>

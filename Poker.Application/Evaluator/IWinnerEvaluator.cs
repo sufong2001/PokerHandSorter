@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Poker.Application.Evaluator
 {
+    /// <summary>
+    /// The definition of Winner Evaluator common interface
+    /// </summary>
     public interface IWinnerEvaluator
     {
         /// <summary>

@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Poker.Application.Evaluator;
 using Poker.Application.Evaluator.Categorisers;
+using Poker.Application.Simulator;
 using Poker.Data;
 using Poker.Domain;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PokerHandSorter
 {
@@ -14,24 +14,23 @@ namespace PokerHandSorter
         private static void Main(string[] args)
         {
             var serviceProvider = ResolveServiceProvider();
-            var handEvaluator = serviceProvider.GetService<IHandEvaluator>();
-            var winnerEvaluator = serviceProvider.GetService<IWinnerEvaluator>();
             var reader = serviceProvider.GetService<FileHandReader>();
+            var simulator = serviceProvider.GetService<PokerGameSimulator>();
 
             try
             {
                 if (args.Length == 0)
                     throw new ArgumentNullException($"Data file name is required.");
 
-                // game preparation
+                // game preparation - load cards
                 var sorter = reader.Load(args[0]).GetHandSet();
                 var players = new[] { new Player("1"), new Player("2") };
 
                 // start simulation
-                RunGame(players, sorter, handEvaluator, winnerEvaluator);
+                var result = simulator.Run(players, sorter);
 
                 // result
-                ShowResult(players);
+                ShowResult(result);
             }
             catch (Exception e)
             {
@@ -39,37 +38,11 @@ namespace PokerHandSorter
             }
         }
 
-        private static void RunGame(IReadOnlyList<Player> players, IEnumerable<Hand[]> sorter, IHandEvaluator handEvaluator, IWinnerEvaluator winnerEvaluator)
-        {
-            // sorter gives hands to each game which will return a winner or null when it is tie.
-            var winners = sorter.Select(EachGameWinner)
-                .Where(w => w != null);
-
-            // here is what happen in each game
-            Player EachGameWinner(Hand[] hands)
-            {
-                // each player receive a hand
-                var game = players.Select((p, i) => { p.Hand = hands[i]; return p; });
-
-                // evaluate hand ranking on individual player by using HandCategoriserChain with Chain of Responsibility Pattern  
-                game = game.Select(p => { p.Hand = handEvaluator.Evaluate(p.Hand); return p; });
-
-                // evaluate the winner
-                return winnerEvaluator.ShowWinner(game);
-            }
-
-            // winning count on total and individual player
-            var totalGameHasWinner = winners.Sum(w =>
-            {
-                w.WinCount++;
-                return 1;
-            });
-
-            // total number of tie if it is required
-            var tie = sorter.Count() - totalGameHasWinner;
-        }
-
-        private static void ShowResult(Player[] players)
+        /// <summary>
+        /// Helper function to show the player results
+        /// </summary>
+        /// <param name="players"></param>
+        private static void ShowResult(IEnumerable<Player> players)
         {
             foreach (var player in players)
             {
@@ -77,6 +50,10 @@ namespace PokerHandSorter
             }
         }
 
+        /// <summary>
+        /// Helper function to create service provider
+        /// </summary>
+        /// <returns></returns>
         private static ServiceProvider ResolveServiceProvider()
         {
             var services = new ServiceCollection();
@@ -86,12 +63,17 @@ namespace PokerHandSorter
             return services.BuildServiceProvider();
         }
 
+        /// <summary>
+        /// Helper function to config DI service
+        /// </summary>
+        /// <param name="services"></param>
         public static void ConfigureServices(IServiceCollection services)
         {
             services
                 .AddSingleton<IHandEvaluator, HandCategoriserChain>()
                 .AddSingleton<IWinnerEvaluator, WinnerEvaluator>()
                 .AddTransient<FileHandReader>()
+                .AddTransient<PokerGameSimulator>()
                 ;
         }
     }

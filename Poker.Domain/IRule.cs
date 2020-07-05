@@ -1,7 +1,7 @@
 ﻿namespace Poker.Domain
 {
     /// <summary>
-    /// A rule interface poker rule implementation
+    /// The definition of poker rule common interface
     /// </summary>
     public interface IRule
     {
